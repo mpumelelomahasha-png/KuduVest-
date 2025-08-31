@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest - Smart Investing</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <img src="img/kuduvest-logo.png" alt="KuduVest Logo" class="logo">
+    <h1>KuduVest</h1>
+    <p class="slogan">“Invest Smart. Earn Fast.”</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="invest.html">Invest</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Welcome to KuduVest</h2>
+      <p>Established 2025 in South Africa, serving clients worldwide. Deposit easily, grow your funds, and withdraw securely.</p>
+      <a href="invest.html" class="btn">Start Investing</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>📞 +27 63 627 6638 | 📧 kuduvest@zohomail.com</p>
+    <p>&copy; 2025 KuduVest. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest - Invest</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+</head>
+<body>
+  <header>
+    <img src="img/kuduvest-logo.png" alt="KuduVest Logo" class="logo">
+    <h1>KuduVest</h1>
+    <p class="slogan">“Invest Smart. Earn Fast.”</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="invest.html">Invest</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Invest with KuduVest</h2>
+      <p>Select your amount and start earning profits in 2–3 business days.</p>
+
+      <form id="investForm">
+        <label for="amount">Enter Amount (ZAR):</label>
+        <input type="number" id="amount" name="amount" required min="100">
+        <button type="submit" class="btn">Invest Now</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>📞 +27 63 627 6638 | 📧 kuduvest@zohomail.com</p>
+    <p>&copy; 2025 KuduVest. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/invest.js"></script>
+</body>
+</html>
+document.getElementById("investForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  let amount = document.getElementById("amount").value;
+
+  FlutterwaveCheckout({
+    public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxxxxx-X",
+    tx_ref: "kuduvest_" + Date.now(),
+    amount: amount,
+    currency: "ZAR",
+    payment_options: "card, banktransfer, ussd",
+    customer: {
+      email: firebase.auth().currentUser ? firebase.auth().currentUser.email : "guest@kuduvest.com",
+      phonenumber: "+27636276638",
+      name: "KuduVest Investor",
+    },
+    callback: function (data) {
+      // Save to Firestore
+      firebase.firestore().collection("transactions").add({
+        user: firebase.auth().currentUser ? firebase.auth().currentUser.uid : "guest",
+        type: "deposit",
+        amount: amount,
+        status: "success",
+        date: new Date()
+      }).then(() => {
+        window.location.href = "thankyou.html";
+      });
+    },
+    onclose: function() {
+      alert("Payment closed.");
+    },
+  });
+});
+public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxxxxx-X"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest - Wallet</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <img src="img/kuduvest-logo.png" alt="KuduVest Logo" class="logo">
+    <h1>KuduVest</h1>
+    <p class="slogan">“Invest Smart. Earn Fast.”</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="invest.html">Invest</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>My Wallet</h2>
+      <p>Balance: <span id="wallet-balance">Loading...</span> ZAR</p>
+
+      <div class="wallet-actions">
+        <button onclick="showDeposit()">Deposit</button>
+        <button onclick="showWithdraw()">Withdraw</button>
+        <button onclick="showHistory()">Transactions</button>
+      </div>
+
+      <!-- Deposit Section -->
+      <div id="deposit-section" class="wallet-section hidden">
+        <h3>Deposit Funds</h3>
+        <form id="depositForm">
+          <input type="number" id="depositAmount" placeholder="Enter amount" required>
+          <button type="submit">Deposit</button>
+        </form>
+      </div>
+
+      <!-- Withdraw Section -->
+      <div id="withdraw-section" class="wallet-section hidden">
+        <h3>Withdraw Funds</h3>
+        <form id="withdrawForm">
+          <input type="number" id="withdrawAmount" placeholder="Enter amount" required>
+          <button type="submit">Withdraw</button>
+        </form>
+        <p class="note">⚠ Withdrawals are processed in 72 hours.  
+        Status: <span id="withdraw-status">None</span></p>
+      </div>
+
+      <!-- History Section -->
+      <div id="history-section" class="wallet-section hidden">
+        <h3>Transaction History</h3>
+        <ul id="transaction-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>📞 +27 63 627 6638 | 📧 kuduvest@zohomail.com</p>
+    <p>&copy; 2025 KuduVest. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/wallet.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest - Sign Up</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <img src="img/kuduvest-logo.png" alt="KuduVest Logo" class="logo">
+    <h1>KuduVest</h1>
+    <p class="slogan">“Invest Smart. Earn Fast.”</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="invest.html">Invest</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html" class="active">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Create an Account</h2>
+      <form id="signupForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="login.html">Login</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>📞 +27 63 627 6638 | 📧 kuduvest@zohomail.com</p>
+    <p>&copy; 2025 KuduVest. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <img src="img/kuduvest-logo.png" alt="KuduVest Logo" class="logo">
+    <h1>KuduVest</h1>
+    <p class="slogan">“Invest Smart. Earn Fast.”</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="invest.html">Invest</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="login.html" class="active">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>📞 +27 63 627 6638 | 📧 kuduvest@zohomail.com</p>
+    <p>&copy; 2025 KuduVest. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest - Payment Success</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .success-box {
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 30px;
+      background: #e8f9f0;
+      border: 2px solid #28a745;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+    }
+    .success-box h2 {
+      color: #28a745;
+      margin-bottom: 15px;
+    }
+    .success-box p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .whatsapp-btn {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 16px;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover {
+      background: #20b558;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="img/kuduvest-logo.png" alt="KuduVest Logo" class="logo">
+    <h1>KuduVest</h1>
+    <p class="slogan">“Invest Smart. Earn Fast.”</p>
+  </header>
+
+  <main>
+    <div class="success-box">
+      <h2>✅ Payment Successful!</h2>
+      <p>Thank you for your investment with <b>KuduVest</b>.  
+      Your deposit has been received and is being processed.  
+      You will start seeing updates in your <a href="wallet.html">Wallet</a> soon.</p>
+
+      <!-- WhatsApp Contact -->
+      <a id="whatsappBtn" 
+         href="https://wa.me/27636276638?text=Hello%20KuduVest%2C%20I%20just%20completed%20my%20investment%20payment.%20Please%20confirm." 
+         class="whatsapp-btn">📲 Contact Us on WhatsApp</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>📞 +27 63 627 6638 | 📧 kuduvest@zohomail.com</p>
+    <p>&copy; 2025 KuduVest. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Auto-open WhatsApp after 5 seconds
+    setTimeout(() => {
+      window.location.href = "https://wa.me/27636276638?text=Hello%20KuduVest%2C%20I%20just%20completed%20my%20investment%20payment.%20Please%20confirm.";
+    }, 5000);
+  </script>
+</body>
+</html>
+<!-- Deposit Form -->
+<div id="depositForm" class="wallet-box">
+  <h2>Deposit Funds</h2>
+  <p>Enter the amount you want to deposit:</p>
+  <input type="number" id="depositAmount" placeholder="Enter amount (ZAR)">
+  <button onclick="makeDeposit()">Deposit</button>
+</div>
+<script>
+  function makeDeposit() {
+    const amount = document.getElementById('depositAmount').value;
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid deposit amount.");
+      return;
+    }
+
+    // Simulate deposit process
+    alert("Processing your deposit of R" + amount + " ...");
+
+    // Redirect to success page after "processing"
+    setTimeout(() => {
+      window.location.href = "success.html";
+    }, 2000);
+  }
+</script>
+<script>
+  // Load history from localStorage
+  function loadHistory() {
+    const history = JSON.parse(localStorage.getItem("transactions")) || [];
+    const list = document.getElementById("historyList");
+    list.innerHTML = "";
+    history.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.date} | ${item.type} | R${item.amount} | ${item.status}`;
+      list.appendChild(li);
+    });
+  }
+
+  function saveTransaction(type, amount, status) {
+    const history = JSON.parse(localStorage.getItem("transactions")) || [];
+    history.unshift({
+      date: new Date().toLocaleString(),
+      type,
+      amount,
+      status
+    });
+    localStorage.setItem("transactions", JSON.stringify(history));
+    loadHistory();
+  }
+
+  function makeDeposit() {
+    const amount = document.getElementById('depositAmount').value;
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid deposit amount.");
+      return;
+    }
+
+    alert("Processing your deposit of R" + amount + " ...");
+
+    setTimeout(() => {
+      saveTransaction("Deposit", amount, "✅ Successful");
+      window.location.href = "success.html";
+    }, 2000);
+  }
+
+  function makeWithdraw() {
+    const amount = document.getElementById('withdrawAmount').value;
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid withdrawal amount.");
+      return;
+    }
+
+    const status = document.getElementById("withdrawStatus");
+    status.innerHTML = "⏳ Withdrawal of R" + amount + " is Processing (72hrs)...";
+    saveTransaction("Withdrawal", amount, "⏳ Processing");
+
+    // Simulate timeline
+    setTimeout(() => {
+      status.innerHTML = "✅ Withdrawal Approved (after 68hrs)";
+      saveTransaction("Withdrawal", amount, "✅ Approved (after 68hrs)");
+    }, 5000);
+
+    setTimeout(() => {
+      status.innerHTML = "💸 Sent to Bank";
+      saveTransaction("Withdrawal", amount, "💸 Sent to Bank");
+    }, 8000);
+  }
+
+  // Load history on page load
+  window.onload = loadHistory;
+</script>

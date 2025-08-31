@@ -1,0 +1,391 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KuduVest — Investment Access You Can Trust</title>
+  <meta name="description" content="KuduVest connects everyday investors to licensed investment providers. Clear fees, transparent risks, global access with a South African base." />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#6ee7b7;--muted:#94a3b8;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,#071025 0%, #071829 60%);color:#e6eef8;line-height:1.5}
+    .container{max-width:1100px;margin:28px auto;padding:20px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:14px;padding:20px;box-shadow:0 6px 24px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.04)}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .mark{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),#60a5fa);border-radius:10px;display:grid;place-items:center;color:#042027;font-weight:700}
+    h1{margin:0;font-size:22px}
+    p.lead{color:var(--muted);margin:8px 0 0}.grid{display:grid;grid-template-columns:1fr 420px;gap:20px;margin-top:20px}
+@media (max-width:900px){.grid{grid-template-columns:1fr}.logo h1{font-size:18px}}
+
+.hero-cta{display:flex;gap:12px;margin-top:14px}
+.btn{background:var(--accent);color:#042027;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+.btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
+
+.features{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.feature{background:var(--glass);padding:10px;border-radius:10px;color:var(--muted);font-size:14px}
+
+.panel{border-radius:12px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+.small{font-size:13px;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+@media (max-width:700px){.steps{grid-template-columns:1fr}}
+.step{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+.step h4{margin:6px 0}
+
+footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+
+.product-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:900px){.product-list{grid-template-columns:1fr}}
+.product{padding:12px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.03)}
+
+.contact-row{display:flex;gap:12px;align-items:center}
+.input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+textarea{min-height:110px}
+
+.muted-note{color:var(--muted);font-size:13px}
+
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-size:13px}
+
+.legal{font-size:13px;color:var(--muted);line-height:1.4}
+
+.whatsapp{display:inline-flex;gap:8px;align-items:center;background:#25d366;color:#042027;padding:10px 12px;border-radius:10px;font-weight:700;border:none}
+
+.modal{position:fixed;left:0;right:0;top:0;bottom:0;display:none;align-items:center;justify-content:center;background:linear-gradient(0deg,rgba(2,6,23,0.7),rgba(2,6,23,0.7))}
+.modal .box{max-width:900px;width:96%;padding:20px;background:#071428;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+.modal.show{display:flex}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header>
+        <div class="logo">
+          <div class="mark">KV</div>
+          <div>
+            <h1>KuduVest — Investment Access You Can Trust</h1>
+            <p class="lead">Licensed provider introductions • Transparent fees • Global access (SA base)</p>
+          </div>
+        </div>
+        <div>
+          <div class="chip">Based: South Africa</div>
+        </div>
+      </header><div class="grid">
+    <main>
+      <section style="margin-top:18px">
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="flex:1">
+            <h2 style="margin:0 0 8px">Start investing the right way — no hype, just clarity</h2>
+            <p class="small">KuduVest introduces you to licensed investment providers and helps you understand products, risks, and timelines. We do not hold client funds and we never promise guaranteed returns.</p>
+
+            <div class="hero-cta">
+              <button class="btn" onclick="openForm()">Get Starter Guide</button>
+              <a class="btn outline" href="#how">How it works</a>
+            </div>
+
+            <div class="features" style="margin-top:18px">
+              <div class="feature">Licensed partners only</div>
+              <div class="feature">Payment by provider rails</div>
+              <div class="feature">Clear fees & T&Cs</div>
+              <div class="feature">Support on WhatsApp</div>
+            </div>
+
+            <div class="steps">
+              <div class="step"><strong>1 — Learn</strong><h4 class="small">We explain products & risks.</h4></div>
+              <div class="step"><strong>2 — Connect</strong><h4 class="small">You open & fund directly with the provider.</h4></div>
+              <div class="step"><strong>3 — Support</strong><h4 class="small">We provide education & help with onboarding.</h4></div>
+            </div>
+          </div>
+
+          <aside style="width:360px">
+            <div class="panel">
+              <h3 style="margin:0">Quick facts</h3>
+              <p class="muted-note" style="margin:8px 0">Withdrawals typically process in <strong>1–3 business days</strong> after the provider confirms your redemption (varies by product).</p>
+
+              <div style="margin-top:8px">
+                <div class="small"><strong>Contact</strong></div>
+                <div class="small">Email: <a href="mailto:support@kuduvest.africa">support@kuduvest.africa</a></div>
+                <div style="margin-top:6px"><a class="whatsapp" href="https://wa.me/27871234567?text=Hi%20KuduVest%20-%20I%27d%20like%20the%20starter%20guide" target="_blank">WhatsApp: +27 87 123 4567</a></div>
+              </div>
+
+              <div style="margin-top:12px">
+                <div class="small"><strong>Payments</strong></div>
+                <div class="muted-note">You always fund directly via the licensed provider's bank details or payment link. KuduVest never requests funds to a private account.</div>
+              </div>
+
+              <div style="margin-top:12px">
+                <div class="small"><strong>Refunds</strong></div>
+                <div class="muted-note">If KuduVest mis-bills our own service fee we will refund the mistaken charge within 5–10 business days after verification. Investment outcomes are not refundable.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px" class="panel">
+              <div class="small"><strong>Loyalty</strong></div>
+              <div class="muted-note">KuduPoints: Earn fee discounts, priority support and webinar access. Referral rewards are service-fee discounts (not cash).</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="how" style="margin-top:22px">
+        <h3>How it works</h3>
+        <div class="product-list" style="margin-top:12px">
+          <div class="product">
+            <strong>Step 1 — Education</strong>
+            <p class="small">We show product categories, risk vs return, and any lock-in or withdrawal rules.</p>
+          </div>
+          <div class="product">
+            <strong>Step 2 — Account setup</strong>
+            <p class="small">We walk you through KYC and provider onboarding. Providers handle your funds and send statements.</p>
+          </div>
+          <div class="product">
+            <strong>Step 3 — Funding</strong>
+            <p class="small">You fund using the provider's official bank account or payment link. Never to personal accounts.</p>
+          </div>
+          <div class="product">
+            <strong>Step 4 — Withdrawals & support</strong>
+            <p class="small">You request redemption with the provider. Typical settlement: 1–3 business days. We help escalate support if needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top:22px">
+        <h3>FAQ</h3>
+        <div style="margin-top:12px">
+          <p><strong>Q:</strong> Do you promise returns in 2–3 days?<br><strong>A:</strong> No. We never guarantee returns. Some liquid products settle fast; others have notice periods. Always check the product rules.</p>
+          <p><strong>Q:</strong> Where does my money go?<br><strong>A:</strong> Directly to the licensed provider you choose. KuduVest does not hold client investment funds.</p>
+          <p><strong>Q:</strong> What if I have a problem with the provider?<br><strong>A:</strong> We help escalate disputes, and we will refund any KuduVest service fee that we charged in error. Provider transaction disputes must follow the provider's T&Cs.</p>
+        </div>
+      </section>
+
+      <section style="margin-top:22px" class="card">
+        <h3 style="margin-top:0">Contact & Starter Guide</h3>
+        <p class="muted-note">Fill the form below and we’ll email a free starter pack explaining product types, timelines, and how to safely fund with providers.</p>
+        <form id="leadForm" onsubmit="submitForm(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <input class="input" id="name" placeholder="Full name" required />
+            <input class="input" id="email" placeholder="Email address" type="email" required />
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+            <input class="input" id="country" placeholder="Country" required />
+            <input class="input" id="phone" placeholder="Phone (incl. country code)" required />
+          </div>
+          <div style="margin-top:10px">
+            <textarea id="note" placeholder="Optional: a short note or question"></textarea>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+            <button class="btn" type="submit">Send starter guide</button>
+            <button type="button" class="btn outline" onclick="openWhatsApp()">Chat on WhatsApp</button>
+          </div>
+          <p class="muted-note" style="margin-top:10px">We will never ask you to send funds to a personal account. KuduVest only directs you to licensed provider rails.</p>
+        </form>
+      </section>
+
+    </main>
+
+    <aside>
+      <div class="panel">
+        <h3 style="margin:0">Terms Summary</h3>
+        <p class="muted-note">KuduVest provides introductions only. We do not hold client funds. Returns are not guaranteed. KuduVest service fee refunds will be made for confirmed billing errors (5–10 business days).</p>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn outline" onclick="showModal('terms')">View T&Cs</button>
+          <button class="btn" onclick="showModal('privacy')">Privacy</button>
+        </div>
+
+        <div style="margin-top:14px">
+          <h4 class="small">Contact</h4>
+          <div class="small"><strong>Email:</strong> support@kuduvest.africa</div>
+          <div class="small" style="margin-top:6px"><strong>Phone / WhatsApp:</strong> +27 63 627 6638 </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h4 class="small">Business details</h4>
+          <div class="small">KuduVest (Pty) Ltd — Registered in South Africa (registration placeholder)</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="panel">
+        <h4 class="small">Sample Payment Instructions (example)</h4>
+        <p class="muted-note">Use the provider's official payment link or bank details shown during onboarding. Never send funds to personal numbers or WhatsApp accounts.</p>
+        <pre class="muted-note" style="background:transparent;border:none;padding:0;margin:0;">Provider bank:ABSA 
+
+Reference: YourName - KV</pre> </div>
+
+<div style="margin-top:12px" class="panel">
+        <h4 class="small">Loyalty</h4>
+        <p class="muted-note">KuduPoints: Earned via education modules, referrals and maintaining accounts. Redeem for service fee discounts.</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="legal">Investing carries risk. KuduVest is a facilitator only — KuduVest does not guarantee returns. Read the full Terms & Conditions before using our service.</div>
+  </footer>
+</div>
+
+  </div>  <div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="box" role="dialog" aria-modal="true">
+      <div id="modalContent"></div>
+      <div style="text-align:right;margin-top:12px"><button class="btn outline" onclick="hideModal()">Close</button></div>
+    </div>
+  </div>  <script>
+    function openForm(){
+      document.getElementById('name').focus();
+      window.scrollTo({top:document.getElementById('leadForm').offsetTop - 20, behavior:'smooth'});
+    }
+    function openWhatsApp(){
+      window.open('https://wa.me/27636276638?text=Hi%20KuduVest%20-%20I%27d%20like%20the%20starter%20guide','_blank')
+    }
+
+    function submitForm(e){
+      e.preventDefault();
+      const data = {
+        name:document.getElementById('name').value.trim(),
+        email:document.getElementById('email').value.trim(),
+        country:document.getElementById('country').value.trim(),
+        phone:document.getElementById('phone').value.trim(),
+        note:document.getElementById('note').value.trim(),
+        timestamp:new Date().toISOString()
+      };
+      // NOTE: This demo does not send real data. Replace the following with your form backend.
+      console.log('Lead submitted', data);
+      alert('Thanks — starter guide will be sent to ' + data.email + ' (demo). Replace the front-end call with your server or email provider to make this live.');
+      document.getElementById('leadForm').reset();
+    }
+
+    function showModal(type){
+      const content = {
+        terms: `
+          <h3>Terms & Conditions — Summary</h3>
+          <p class="muted-note">KuduVest connects users to licensed third-party investment providers. KuduVest does not hold client funds and does not provide guaranteed returns. You invest directly with providers and are subject to their terms, fees and settlement timelines.</p>
+          <ul class="muted-note"><li>No promises of guaranteed returns.</li><li>KuduVest service fee refunds apply only to confirmed billing errors and will be processed within 5–10 business days after verification.</li><li>Provider disputes must be handled under the provider's complaint procedure.</li></ul>
+        `,
+        privacy: `
+          <h3>Privacy — Summary</h3>
+          <p class="muted-note">We collect contact details for the purpose of onboarding and support. Personal data is processed in line with applicable laws (e.g., POPIA/GDPR where relevant). We will never share your personal data with a third party without consent except where necessary for provider onboarding or legal compliance.</p>
+        `
+      };
+      document.getElementById('modalContent').innerHTML = content[type] || '<p>Not found</p>';
+      document.getElementById('modal').classList.add('show');
+    }
+    function hideModal(){document.getElementById('modal').classList.remove('show')}
+    function closeModal(e){ if(e.target.id==='modal') hideModal(); }
+  </script></body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuduVest Investments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    header img {
+      max-height: 70px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    p {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    #start-payment-button {
+      margin-top: 25px;
+      padding: 15px 35px;
+      background: #27ae60;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #start-payment-button:hover {
+      background: #2ecc71;
+    }
+    footer {
+      margin-top: 50px;
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://yourdomain.com/logo.png" alt="KuduVest Logo">
+    <h1>KuduVest Investments</h1>
+    <p>Secure. Trusted. Global Investment Platform.</p>
+  </header>
+
+  <div class="container">
+    <h2>Grow Your Wealth with KuduVest</h2>
+    <p>
+      KuduVest is a trusted online investment platform established in South Africa and available worldwide.  
+      Start earning profits from the comfort of your home in just <strong>2–3 investment days</strong>.  
+      Deposits accepted via bank transfer, card, PayPal, or mobile money.
+    </p>
+    
+    <!-- Payment Button -->
+    <button id="start-payment-button">Invest Now</button>
+  </div>
+
+  <footer>
+    <p>© 2025 KuduVest Investments | support@kuduvest.com | +27 81 000 0000</p>
+  </footer>
+
+  <!-- Flutterwave Inline Script -->
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <script>
+    document.getElementById("start-payment-button").addEventListener("click", function () {
+      FlutterwaveCheckout({
+        public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxx-X", // replace with your real public key
+        tx_ref: "kuduvest-" + Date.now(),
+        amount: 500, // default investment (ZAR) - can make dynamic
+        currency: "ZAR",
+        payment_options: "card,banktransfer,ussd,mpesa,account,barter,qr,paypal",
+        redirect_url: "https://yourdomain.com/thank-you.html", 
+        customer: {
+          email: "customer@email.com",
+          phone_number: "08100000000",
+          name: "Investor Name",
+        },
+        customizations: {
+          title: "KuduVest Investments",
+          description: "Secure Investment Deposit",
+          logo: "https://yourdomain.com/logo.png",
+        },
+      });
+    });
+  </script>
+
+</body>
+</html>
